@@ -16,5 +16,6 @@ mv ~/.cache/nvim{,.bak}
 
 git clone https://github.com/anandamw/my-lazyvim-config/ ~/.config/nvim
 
+rm -rf ~/.config/nvim/.git
 
 nvim
