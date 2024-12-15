@@ -19,3 +19,6 @@ git clone https://github.com/anandamw/my-lazyvim-config/ ~/.config/nvim
 rm -rf ~/.config/nvim/.git
 
 nvim
+
+npm install -g blade-formatter
+
