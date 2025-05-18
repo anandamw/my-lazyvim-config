@@ -1,89 +1,50 @@
 return {
-  -- Install Prettier menggunakan Mason
+  -- Mason untuk install prettier
   {
     "williamboman/mason.nvim",
     opts = {
-      ensure_installed = { "prettier" }, -- Pastikan Prettier diinstal
+     ensure_installed = { "prettier", "stylua", "eslint_d" },
     },
   },
 
-  -- Install prettier.nvim untuk integrasi Prettier
+  {
+    "williamboman/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {
+        "tsserver",    -- LSP untuk TypeScript/JavaScript
+        "pyright",     -- LSP untuk Python
+        "lua_ls",      -- LSP untuk Lua (lua-language-server)
+      },
+    },
+  },
+  -- prettier.nvim untuk integrasi prettier CLI
   {
     "MunifTanjim/prettier.nvim",
     opts = {
-      bin = "prettier", -- atau 'prettierd' (v0.23.3+)
+      bin = "prettier",
       filetypes = {
-        "css",
-        "graphql",
-        "html",
-        "javascript",
-        "javascriptreact",
-        "json",
-        "less",
-        "markdown",
-        "scss",
-        "typescript",
-        "typescriptreact",
-        "yaml",
-        "php",
-        "blade",
+        "css", "graphql", "html", "javascript", "javascriptreact",
+        "json", "less", "markdown", "scss", "typescript",
+        "typescriptreact", "yaml", "php", "blade",
+      },
+      cli_options = {
+        arrow_parens = "always",
+        bracket_spacing = true,
+        single_quote = true,
+        trailing_comma = "all",
+        tab_width = 2,
+        use_tabs = false,
       },
     },
   },
 
-  -- Install null-ls using Mason
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = {
-      ensure_installed = { "null-ls" }, -- Ensure null-ls is installed
-    },
-  },
-
-  -- Gunakan Prettier dengan null-ls untuk formatting
+  -- none-ls.nvim sebagai pengganti null-ls
   {
     "nvimtools/none-ls.nvim",
-    optional = true,
     opts = function(_, opts)
-      local nls = require("null-ls")
+      local null_ls = require("null-ls") -- require di dalam fungsi supaya plugin sudah ter-load
       opts.sources = opts.sources or {}
-      table.insert(opts.sources, nls.builtins.formatting.prettier) -- Tambahkan Prettier ke sumber format null-ls
-    end,
-  },
-
-  -- Install Conform untuk format otomatis (optional)
-  {
-    "stevearc/conform.nvim",
-    optional = true, -- Tandai plugin ini sebagai opsional
-    opts = function(_, opts)
-      local supported = {
-        "css",
-        "graphql",
-        "html",
-        "javascript",
-        "javascriptreact",
-        "json",
-        "less",
-        "markdown",
-        "scss",
-        "typescript",
-        "typescriptreact",
-        "yaml",
-        "php",
-        "blade",
-      }
-      opts.formatters_by_ft = opts.formatters_by_ft or {}
-      -- Tambahkan Prettier sebagai formatter untuk filetypes yang didukung
-      for _, ft in ipairs(supported) do
-        opts.formatters_by_ft[ft] = opts.formatters_by_ft[ft] or {}
-        table.insert(opts.formatters_by_ft[ft], "prettier")
-      end
-
-      opts.formatters = opts.formatters or {}
-      opts.formatters.prettier = {
-        condition = function(_, ctx)
-          return M.has_parser(ctx) and (vim.g.lazyvim_prettier_needs_config ~= true or M.has_config(ctx))
-        end,
-      }
+      table.insert(opts.sources, null_ls.builtins.formatting.prettier)
     end,
   },
 }
