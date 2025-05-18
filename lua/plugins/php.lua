@@ -1,16 +1,14 @@
 return {
   {
-    -- Set Laravel Pint as the default PHP formatter with PHP CS Fixer as a fallback.
     "stevearc/conform.nvim",
     optional = true,
     opts = {
       formatters_by_ft = {
-        php = { "pint", "php_cs_fixer" },
+        php = { "pint" },
       },
     },
   },
   {
-    -- Remove phpcs linter.
     "mfussenegger/nvim-lint",
     optional = true,
     opts = {
@@ -19,8 +17,8 @@ return {
       },
     },
   },
+  -- Blade treesitter tetap oke
   {
-    -- Add a Treesitter parser for Laravel Blade to provide Blade syntax highlighting.
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
@@ -38,7 +36,6 @@ return {
       require("nvim-treesitter.configs").setup(opts)
       local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
       parser_config.blade = {
-        --@class ParserInfo[]
         install_info = {
           url = "https://github.com/EmranMR/tree-sitter-blade",
           files = { "src/parser.c" },

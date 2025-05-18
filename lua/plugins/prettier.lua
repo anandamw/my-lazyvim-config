@@ -10,9 +10,7 @@ return {
     config = function()
       null_ls.setup({
         sources = {
-          null_ls.builtins.formatting.prettier.with({
-            extra_filetypes = { "php", "blade" },
-          }),
+          null_ls.builtins.formatting.prettier,
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
@@ -57,8 +55,7 @@ return {
         typescript = { "prettier" },
         typescriptreact = { "prettier" },
         yaml = { "prettier" },
-        php = { "prettier" },
-        blade = { "prettier" },
+        -- php dan blade DIHAPUS di sini
       },
       format_on_save = true,
     },

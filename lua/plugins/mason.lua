@@ -40,11 +40,14 @@ return {
 
   -- none-ls.nvim sebagai pengganti null-ls
   {
-    "nvimtools/none-ls.nvim",
-    opts = function(_, opts)
-      local null_ls = require("null-ls") -- require di dalam fungsi supaya plugin sudah ter-load
-      opts.sources = opts.sources or {}
-      table.insert(opts.sources, null_ls.builtins.formatting.prettier)
-    end,
-  },
+  "nvimtools/none-ls.nvim",
+  opts = function(_, opts)
+    local null_ls = require("null-ls")
+    opts.sources = opts.sources or {}
+
+    -- Tambahkan dua formatter
+    table.insert(opts.sources, null_ls.builtins.formatting.prettier)
+    table.insert(opts.sources, null_ls.builtins.formatting.pint)
+  end,
+},
 }
